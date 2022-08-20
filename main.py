@@ -31,11 +31,13 @@ def showResult():
 # ------------------------------------------------------------------ RENOMBRAR
 def renameFiles():
     switch = askyesno("WARNING", "Are you sure you want to continue?")
-    for oldDict, newDict in zip(diccFiles.items(), diccMod.items()):
-        for oldfiles, newfiles in zip(oldDict[1], newDict[1]):
-            print(switch)
-    showinfo("Information", "Successfully renamed files")
-    
+    if switch is True:
+        for oldDict, newDict in zip(diccFiles.items(), diccMod.items()):
+            for oldfiles, newfiles in zip(oldDict[1], newDict[1]):
+                print(join(oldDict[0], oldfiles), join(newDict[0], newfiles))
+                #rename(join(oldDict[0], oldfiles), join(newDict[0], newfiles))
+        showinfo("Information", "Successfully renamed files")
+    else:pass
 # =================================================================================== INTERFAZ
 root = Tk()
 root.title('Creado por: Rey')
