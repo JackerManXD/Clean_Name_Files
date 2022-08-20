@@ -1,6 +1,7 @@
 from tkinter import END, Tk, Frame, Listbox, StringVar
 from tkinter.ttk import Button, Entry
 from tkinter.filedialog import askdirectory
+from tkinter.messagebox import askyesno, showinfo
 from os import walk, rename
 from os.path import join
 
@@ -9,7 +10,7 @@ from os.path import join
 def findFolder():
     global diccFiles
     diccFiles = {}
-    folder = askdirectory(title='Seleccionar Carpeta')
+    folder = askdirectory(title='Select Folder')
     if folder == "": return
     listOrig.delete(0, END)
     for (root, dirs, files) in walk(folder):
@@ -29,10 +30,12 @@ def showResult():
         diccMod[values[0]] = lsMod
 # ------------------------------------------------------------------ RENOMBRAR
 def renameFiles():
+    switch = askyesno("WARNING", "Are you sure you want to continue?")
     for oldDict, newDict in zip(diccFiles.items(), diccMod.items()):
         for oldfiles, newfiles in zip(oldDict[1], newDict[1]):
-            print(oldfiles, newfiles)
-        
+            print(switch)
+    showinfo("Information", "Successfully renamed files")
+    
 # =================================================================================== INTERFAZ
 root = Tk()
 root.title('Creado por: Rey')
@@ -46,9 +49,9 @@ str4 = StringVar()
 Marco = Frame(root)
 Marco.pack(expand=True, fill='both')
 # ------------------------------------------------------------------ BOTONES
-LoadFolder = Button(Marco, text="Seleccionar Carpeta", width=20, command=findFolder)
-Preview = Button(Marco, text="Previsualizar", width=20, command=showResult)
-Rename = Button(Marco, text="Renombrar", width=20, command=renameFiles)
+LoadFolder = Button(Marco, text="Select Folder", width=20, command=findFolder)
+Preview = Button(Marco, text="Preview", width=20, command=showResult)
+Rename = Button(Marco, text="Rename", width=20, command=renameFiles)
 # ------------------------------------------------------------------ UBICACION BOTONES
 LoadFolder.grid(row=1, column=1, padx=10, pady=10, columnspan=2)
 Preview.grid(row=1, column=2, padx=10, pady=10, columnspan=2)
